@@ -1,23 +1,41 @@
 import java.util.Scanner;
-import java.util.Scanner;
 
-interface Operationale <T>{
-    T calculate(T x,T y);}
-public class Calculator implements Operationale{
+class Main{
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Введите ваше выражение: ");
         String input = sc.nextLine();
         String[] splitInput = input.split("[+\\-*/]");
-        if (!splitInput[0].matches("\\d*\\.\\d*|\\d*") || !splitInput[1].matches("\\d*\\.\\d*|\\d*")) {
-            System.out.println("ВВедено неверное выражение"); return;}
-        Double znach1 = Double.parseDouble(splitInput[0]);
-        Double znach2 = Double.parseDouble(splitInput[1]);
-        Operationale <Double> math = (x,y)-> {
-            if (input.contains("+")){return x+y;}if (input.contains("-")){return x-y;}if (input.contains("*")){return x*y;}if (input.contains("/")){if (y == 0){System.out.println("На ноль делить нельзя");return null;}return x/y;}return null;};System.out.println(math.calculate(znach1,znach2));}
-
-    @Override
-    public Object calculate(Object x, Object y) {
-        return null;
+        if (input.contains("/")){
+            Double num1 = Double.parseDouble(splitInput[0]);
+            Double num2 = Double.parseDouble(splitInput[1]);
+            calc <Double> math1 = new calc<Double>(num1,num2);
+            System.out.println(math1.getDel());
+        }
+        else{
+            Integer num1 = Integer.parseInt(splitInput[0]);
+            Integer num2 = Integer.parseInt(splitInput[1]);
+            calc <Integer> math2 = new calc<Integer>(num1,num2);
+            if (input.contains("+")){
+                System.out.println(math2.getPlus());
+            } else if (input.contains("-")) {
+                System.out.println(math2.getMinus());
+            } else if (input.contains("*")) {
+                System.out.println(math2.getUmn());
+            }
+        }
     }
+}
+class calc <T extends Number>{
+    private T znach1;
+    private T znach2;
+
+    calc(T znach1,T znach2){
+        this.znach1 = znach1;
+        this.znach2 = znach2;}
+
+    public int getPlus(){return (int)znach1 + (int)znach2;}
+    public int getMinus(){return (int)znach1 - (int)znach2;}
+    public int getUmn(){return (int)znach1 * (int)znach2;}
+    public double getDel(){return (double)znach1 / (double)znach2;}
 }
